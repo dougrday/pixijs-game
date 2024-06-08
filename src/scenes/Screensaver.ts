@@ -35,8 +35,6 @@ export class Screensaver extends Container {
             };
         });
 
-        this.updateTick;
-
         // Handle update
         app.ticker.add(applyVelocityTicker(this, app.renderer));
     }
