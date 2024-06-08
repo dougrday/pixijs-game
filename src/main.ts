@@ -1,5 +1,5 @@
 import { Application } from "pixi.js";
-import { HelloWorld } from "./scenes/HelloWorld";
+import { HelloWorld } from "./HelloWorld";
 
 const init = async (app: Application) => {
     await app.init();

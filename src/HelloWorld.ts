@@ -12,17 +12,17 @@ export class HelloWorld extends Container {
     constructor(app: Application) {
         super();
         this.app = app;
-        this.state = { velocity: { x: 1, y: 1 } };
+        this.state = { velocity: { x: 2, y: 2 } };
 
         this.sprite = Sprite.from("assets/mario.png");
-        this.sprite.scale.x = 0.2;
-        this.sprite.scale.y = 0.2;
+        this.sprite.scale.x = 0.1;
+        this.sprite.scale.y = 0.1;
         this.sprite.x = this.app.renderer.width / 2 - this.sprite.width / 2;
         this.sprite.y = this.app.renderer.height / 2 - this.sprite.height / 2;
         this.addChild(this.sprite);
 
         // Handle window resizing
-        window.addEventListener("resize", (e) => {
+        window.addEventListener("resize", () => {
             this.sprite.x = window.innerWidth / 2 - this.sprite.width / 2;
             this.sprite.y = window.innerHeight / 2 - this.sprite.height / 2;
         });
