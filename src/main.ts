@@ -1,12 +1,16 @@
 import { Application } from "pixi.js";
-import { HelloWorld } from "./scenes/helloWorld";
+import { HelloWorld } from "./scenes/HelloWorld";
 
 const init = async (app: Application) => {
-    await app.init({ width: 1280, height: 600 });
+    await app.init();
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+
+    window.addEventListener("resize", () => {
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+    });
 };
 
 const main = async () => {
-    // Main app
     const app = new Application();
 
     await init(app);

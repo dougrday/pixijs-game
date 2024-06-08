@@ -6,7 +6,7 @@ export class HelloWorld extends Container {
     state: { velocity: { x: number; y: number } };
 
     static async preload() {
-        await Assets.load("assets/hello-world.png");
+        await Assets.load("assets/mario.png");
     }
 
     constructor(app: Application) {
@@ -14,16 +14,18 @@ export class HelloWorld extends Container {
         this.app = app;
         this.state = { velocity: { x: 1, y: 1 } };
 
-        this.sprite = Sprite.from("assets/hello-world.png");
+        this.sprite = Sprite.from("assets/mario.png");
+        this.sprite.scale.x = 0.2;
+        this.sprite.scale.y = 0.2;
         this.sprite.x = this.app.renderer.width / 2 - this.sprite.width / 2;
         this.sprite.y = this.app.renderer.height / 2 - this.sprite.height / 2;
         this.addChild(this.sprite);
 
-        // // Handle window resizing
-        // window.addEventListener("resize", (e) => {
-        //     this.sprite.x = window.innerWidth / 2 - this.sprite.width / 2;
-        //     this.sprite.y = window.innerHeight / 2 - this.sprite.height / 2;
-        // });
+        // Handle window resizing
+        window.addEventListener("resize", (e) => {
+            this.sprite.x = window.innerWidth / 2 - this.sprite.width / 2;
+            this.sprite.y = window.innerHeight / 2 - this.sprite.height / 2;
+        });
 
         // Handle update
         app.ticker.add(() => this.update());
