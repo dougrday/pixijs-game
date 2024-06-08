@@ -1,5 +1,5 @@
 import { Application } from "pixi.js";
-import { HelloWorld } from "./HelloWorld";
+import { Screensaver } from "./scenes/Screensaver";
 
 const init = async (app: Application) => {
     await app.init();
@@ -14,9 +14,9 @@ const main = async () => {
     const app = new Application();
 
     await init(app);
-    await HelloWorld.preload();
+    await Screensaver.preload();
 
-    app.stage.addChild(new HelloWorld(app));
+    app.stage.addChild(new Screensaver(app));
 
     document.body.appendChild(app.canvas);
 };
