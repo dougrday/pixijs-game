@@ -34,12 +34,12 @@ export class Screensaver extends Container {
             applyBounds(context.app.renderer),
             applyBounceOffWalls({
                 bounds: context.app.renderer,
-                preservation: 1.07,
+                preservation: 0.4,
             }),
             applyGravity,
             applyDrag,
         )(this);
 
-        context.app.ticker.add(this.updater);
+        context.ticker.add(this.updater);
     }
 }
