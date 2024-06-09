@@ -1,9 +1,12 @@
-import { Container, Renderer, Ticker } from "pixi.js";
+import { Container, Ticker } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
+import { HasBounds } from "../types";
 
 interface BounceOffWallsSettings {
+    /** The boundaries of the wall */
+    bounds: HasBounds;
+    /** What percentage of velocity is preserved on a bounce */
     preservation: number;
-    renderer: Renderer;
 }
 
 /**
@@ -21,7 +24,7 @@ export const applyBounceOffWalls =
                 // Bounce off horizontal walls
                 if (
                     child.x <= 0 ||
-                    child.x >= settings.renderer.width - child.width
+                    child.x >= settings.bounds.width - child.width
                 ) {
                     child.velocity.x = -(
                         child.velocity.x * settings.preservation
@@ -30,7 +33,7 @@ export const applyBounceOffWalls =
                 // Bounce off vertical walls
                 if (
                     child.y <= 0 ||
-                    child.y >= settings.renderer.height - child.height
+                    child.y >= settings.bounds.height - child.height
                 ) {
                     child.velocity.y = -(
                         child.velocity.y * settings.preservation

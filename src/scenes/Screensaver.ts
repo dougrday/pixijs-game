@@ -20,7 +20,7 @@ export class Screensaver extends Container {
         super();
 
         // Generate 100 marios
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < 100; i++) {
             const mario = Mario.build();
             // Position each one randomely
             positionRandomely(mario, context.app.renderer);
@@ -33,8 +33,8 @@ export class Screensaver extends Container {
             applyVelocity,
             applyBounds(context.app.renderer),
             applyBounceOffWalls({
+                bounds: context.app.renderer,
                 preservation: 1.07,
-                renderer: context.app.renderer,
             }),
             applyGravity,
             applyDrag,
