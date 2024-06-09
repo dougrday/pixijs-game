@@ -7,6 +7,7 @@ export enum Key {
     ArrowUp = "ArrowUp",
     Enter = "Enter",
     Escape = "Escape",
+    Shift = "Shift",
     Space = " ",
     Tab = "Tab",
 }
@@ -24,11 +25,17 @@ export class Keyboard {
 
     protected handleKeyDown(event: KeyboardEvent) {
         this.events.emit("keydown", event);
+        if (event.shiftKey) {
+            this.keys[Key.Shift] = true;
+        }
         this.keys[event.key as Key] = true;
     }
 
     protected handleKeyUp(event: KeyboardEvent) {
         this.events.emit("keyup", event);
+        if (event.shiftKey) {
+            delete this.keys[Key.Shift];
+        }
         delete this.keys[event.key as Key];
     }
 

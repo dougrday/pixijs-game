@@ -46,16 +46,23 @@ export class Mario extends GameObject {
     }
 
     updater(ticker: Ticker) {
-        if (this.context.controllers.keyboard.isKeyDown(Key.ArrowRight)) {
-            this.force.x = 70;
-        } else if (this.context.controllers.keyboard.isKeyDown(Key.ArrowLeft)) {
-            this.force.x = -70;
+        const keyboard = this.context.controllers.keyboard;
+
+        // Running left/right
+        if (keyboard.isKeyDown(Key.ArrowRight)) {
+            // Shift key makes you run
+            this.force.x = keyboard.isKeyDown(Key.Shift) ? 70 : 40;
+        } else if (keyboard.isKeyDown(Key.ArrowLeft)) {
+            // Shift key makes you run
+            this.force.x = keyboard.isKeyDown(Key.Shift) ? -70 : -40;
         } else this.force.x = 0;
 
-        if (this.context.controllers.keyboard.isKeyDown(Key.Space)) {
+        // Space bar to jump
+        if (keyboard.isKeyDown(Key.Space)) {
             if (!this.isJumping) {
-                this.initiateJump(4000);
-            } else this.continueJump(150, 20, ticker.deltaTime);
+                // Initial jump force is stronger if you're running fast
+                this.initiateJump(3500 + 20 * Math.abs(this.force.x));
+            } else this.continueJump(100, 20, ticker.deltaTime);
         } else {
             this.isJumping = false;
             this.jumpTime = 0;
