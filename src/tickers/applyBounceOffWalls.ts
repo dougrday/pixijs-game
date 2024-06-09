@@ -1,6 +1,11 @@
 import { Container, Renderer, Ticker } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
 
+interface BounceOffWallsSettings {
+    preservation: number;
+    renderer: Renderer;
+}
+
 /**
  * Ensures objects stay in-bounds to the renderer.
  * @param renderer The renderer.
@@ -8,16 +13,28 @@ import { GameObject } from "../objects/GameObject";
  * @returns A ticker updater.
  */
 export const applyBounceOffWalls =
-    (renderer: Renderer) => (container: Container) => (_: Ticker) => {
+    (settings: BounceOffWallsSettings) =>
+    (container: Container) =>
+    (_: Ticker) => {
         for (const child of container.children) {
             if (child instanceof GameObject) {
                 // Bounce off horizontal walls
-                if (child.x <= 0 || child.x >= renderer.width - child.width) {
-                    child.velocity.x = -child.velocity.x;
+                if (
+                    child.x <= 0 ||
+                    child.x >= settings.renderer.width - child.width
+                ) {
+                    child.velocity.x = -(
+                        child.velocity.x * settings.preservation
+                    );
                 }
                 // Bounce off vertical walls
-                if (child.y <= 0 || child.y >= renderer.height - child.height) {
-                    child.velocity.y = -child.velocity.y;
+                if (
+                    child.y <= 0 ||
+                    child.y >= settings.renderer.height - child.height
+                ) {
+                    child.velocity.y = -(
+                        child.velocity.y * settings.preservation
+                    );
                 }
             }
         }

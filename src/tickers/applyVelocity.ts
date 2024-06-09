@@ -7,12 +7,12 @@ import { GameObject } from "../objects/GameObject";
  * @param renderer The renderer, so we know the bounds of the velocity (for bouncing)
  * @returns A ticker updater.
  */
-export const applyVelocity = (container: Container) => (_: Ticker) => {
+export const applyVelocity = (container: Container) => (ticker: Ticker) => {
     for (const child of container.children) {
         if (child instanceof GameObject) {
             // Apply velocity
-            child.x += child.velocity.x;
-            child.y += child.velocity.y;
+            child.x += child.velocity.x * ticker.deltaTime;
+            child.y += child.velocity.y * ticker.deltaTime;
         }
     }
     return container;

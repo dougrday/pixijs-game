@@ -6,6 +6,7 @@ import { applyVelocity } from "../tickers/applyVelocity";
 import { compose } from "../tickers/compose";
 import { applyBounds } from "../tickers/applyBounds";
 import { applyDrag } from "../tickers/applyDrag";
+import { applyGravity } from "../tickers/applyGravity";
 
 export class Screensaver extends Container {
     mario: Mario;
@@ -19,10 +20,6 @@ export class Screensaver extends Container {
         super();
 
         this.mario = Mario.build();
-        this.mario.velocity = {
-            x: -2,
-            y: 2,
-        };
 
         this.mario.x =
             this.context.app.renderer.width / 2 - this.mario.width / 2;
@@ -34,17 +31,17 @@ export class Screensaver extends Container {
         window.addEventListener("resize", () => {
             this.mario.x = window.innerWidth / 2 - this.mario.width / 2;
             this.mario.y = window.innerHeight / 2 - this.mario.height / 2;
-            this.mario.velocity = {
-                x: 2,
-                y: 2,
-            };
         });
 
         // Handle update
         this.updater = compose(
             applyVelocity,
             applyBounds(context.app.renderer),
-            applyBounceOffWalls(context.app.renderer),
+            applyBounceOffWalls({
+                preservation: 0.4,
+                renderer: context.app.renderer,
+            }),
+            applyGravity,
             applyDrag,
         )(this);
         context.app.ticker.add(this.updater);
