@@ -7,6 +7,7 @@ import { compose } from "../tickers/compose";
 import { applyBounds } from "../tickers/applyBounds";
 import { applyDrag } from "../tickers/applyDrag";
 import { applyGravity } from "../tickers/applyGravity";
+import { positionRandomely } from "../position/positionRandomely";
 
 export class Screensaver extends Container {
     updater: (ticker: Ticker) => void;
@@ -18,14 +19,12 @@ export class Screensaver extends Container {
     constructor(protected context: GameContext) {
         super();
 
-        // Generate 100 marios in random positions
-        for (let i = 0; i < 100; i++) {
+        // Generate 100 marios
+        for (let i = 0; i < 1000; i++) {
             const mario = Mario.build();
-            mario.x =
-                Math.random() * (this.context.app.renderer.width - mario.width);
-            mario.y =
-                Math.random() *
-                (this.context.app.renderer.height - mario.height);
+            // Position each one randomely
+            positionRandomely(mario, context.app.renderer);
+            // Add it to the container
             this.addChild(mario);
         }
 
@@ -34,7 +33,7 @@ export class Screensaver extends Container {
             applyVelocity,
             applyBounds(context.app.renderer),
             applyBounceOffWalls({
-                preservation: 0.3,
+                preservation: 1.07,
                 renderer: context.app.renderer,
             }),
             applyGravity,
