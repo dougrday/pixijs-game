@@ -2,7 +2,7 @@ import { Container, Ticker } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
 
 const dragCoefficient = 0.1; // A simple drag coefficient, adjust based on experimentation
-const gravity = 3;
+const gravity = 2.5;
 
 /**
  * Applies game object velocity during a tick.
