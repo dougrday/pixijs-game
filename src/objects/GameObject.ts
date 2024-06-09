@@ -6,6 +6,8 @@ export interface Velocity {
 }
 
 export class GameObject extends Sprite {
+    drag = 0.01;
+
     /**
      * The velocity of the game object.
      */
@@ -27,7 +29,7 @@ export class GameObject extends Sprite {
         return object;
     }
 
-    private constructor(texture: Texture) {
+    protected constructor(texture: Texture) {
         super(texture);
     }
 }
