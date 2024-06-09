@@ -1,12 +1,13 @@
 import { Container, Ticker } from "pixi.js";
 import { GameContext } from "../objects/GameContext";
 import { Mario } from "../objects/Mario";
-import { positionRandomely } from "../position/positionRandomely";
+import { positionCentered } from "../position/positionCentered";
 import { applyBounds } from "../tickers/applyBounds";
 import { applyPhysics } from "../tickers/applyPhysics";
 import { compose } from "../tickers/compose";
 
-export class Screensaver extends Container {
+export class MarioGame extends Container {
+    mario: Mario;
     updater: (ticker: Ticker) => void;
 
     static async preload() {
@@ -16,14 +17,9 @@ export class Screensaver extends Container {
     constructor(protected context: GameContext) {
         super();
 
-        // Generate 100 marios
-        for (let i = 0; i < 100; i++) {
-            const mario = Mario.build(context);
-            // Position each one randomely
-            positionRandomely(mario, context.app.renderer);
-            // Add it to the container
-            this.addChild(mario);
-        }
+        this.mario = Mario.build(context);
+        positionCentered(this.mario, context.app.renderer);
+        this.addChild(this.mario);
 
         // Handle update
         this.updater = compose(
