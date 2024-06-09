@@ -13,10 +13,11 @@ const init = async (app: Application) => {
 
 const main = async () => {
     const app = new Application();
-    const context: GameContext = { app, ticker: app.ticker };
 
     await init(app);
     await Screensaver.preload();
+
+    const context: GameContext = { app, ticker: app.ticker };
 
     app.stage.addChild(new Screensaver(context));
 
