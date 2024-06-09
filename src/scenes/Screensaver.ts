@@ -1,31 +1,33 @@
-import { Application, Container } from "pixi.js";
+import { Container } from "pixi.js";
+import { GameContext } from "../objects/GameContext";
 import { Mario } from "../objects/Mario";
-import { compose } from "../tickers/compose";
-import { applyVelocity } from "../tickers/applyVelocity";
-import { applyDrag } from "../tickers/applyDrag";
 import { applyBounceOffWalls } from "../tickers/applyBounceOffWalls";
+import { applyVelocity } from "../tickers/applyVelocity";
+import { compose } from "../tickers/compose";
+import { applyBounds } from "../tickers/applyBounds";
+import { applyDrag } from "../tickers/applyDrag";
 
 export class Screensaver extends Container {
-    app: Application;
     mario: Mario;
+    updater: (ticker: Ticker) => void;
 
     static async preload() {
         await Mario.preload();
     }
 
-    constructor(app: Application) {
+    constructor(protected context: GameContext) {
         super();
 
-        this.app = app;
         this.mario = Mario.build();
-
         this.mario.velocity = {
-            x: 2,
+            x: -2,
             y: 2,
         };
 
-        this.mario.x = this.app.renderer.width / 2 - this.mario.width / 2;
-        this.mario.y = this.app.renderer.height / 2 - this.mario.height / 2;
+        this.mario.x =
+            this.context.app.renderer.width / 2 - this.mario.width / 2;
+        this.mario.y =
+            this.context.app.renderer.height / 2 - this.mario.height / 2;
         this.addChild(this.mario);
 
         // Handle window resizing
@@ -39,11 +41,12 @@ export class Screensaver extends Container {
         });
 
         // Handle update
-        const updater = compose(
+        this.updater = compose(
             applyVelocity,
-            applyBounceOffWalls({ renderer: app.renderer }),
+            applyBounds(context.app.renderer),
+            applyBounceOffWalls(context.app.renderer),
             applyDrag,
-        );
-        app.ticker.add(updater(this));
+        )(this);
+        context.app.ticker.add(this.updater);
     }
 }

@@ -16,7 +16,7 @@ const main = async () => {
     await init(app);
     await Screensaver.preload();
 
-    app.stage.addChild(new Screensaver(app));
+    app.stage.addChild(new Screensaver({ app }));
 
     document.body.appendChild(app.canvas);
 };

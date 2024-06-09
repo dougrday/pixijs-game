@@ -1,9 +1,11 @@
 import { Sprite, Texture, TextureSourceLike } from "pixi.js";
 
-export interface Velocity {
+export interface Vector2 {
     x: number;
     y: number;
 }
+
+export type Velocity = Vector2;
 
 export class GameObject extends Sprite {
     drag = 0.01;
