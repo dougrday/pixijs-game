@@ -21,7 +21,6 @@ export class Screensaver extends Container {
 
         this.mario.velocity = {
             x: 2,
-            //y: (this.app.renderer.height / this.app.renderer.width) * 2,
             y: 2,
         };
 
@@ -35,7 +34,6 @@ export class Screensaver extends Container {
             this.mario.y = window.innerHeight / 2 - this.mario.height / 2;
             this.mario.velocity = {
                 x: 2,
-                //y: (this.app.renderer.height / this.app.renderer.width) * 2,
                 y: 2,
             };
         });
