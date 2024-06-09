@@ -9,7 +9,6 @@ import { applyDrag } from "../tickers/applyDrag";
 import { applyGravity } from "../tickers/applyGravity";
 
 export class Screensaver extends Container {
-    mario: Mario;
     updater: (ticker: Ticker) => void;
 
     static async preload() {
@@ -19,31 +18,30 @@ export class Screensaver extends Container {
     constructor(protected context: GameContext) {
         super();
 
-        this.mario = Mario.build();
-
-        this.mario.x =
-            this.context.app.renderer.width / 2 - this.mario.width / 2;
-        this.mario.y =
-            this.context.app.renderer.height / 2 - this.mario.height / 2;
-        this.addChild(this.mario);
-
-        // Handle window resizing
-        window.addEventListener("resize", () => {
-            this.mario.x = window.innerWidth / 2 - this.mario.width / 2;
-            this.mario.y = window.innerHeight / 2 - this.mario.height / 2;
-        });
+        // Generate 100 marios in random positions
+        for (let i = 0; i < 100; i++) {
+            const mario = Mario.build();
+            mario.x =
+                Math.random() * this.context.app.renderer.width -
+                mario.width / 2;
+            mario.y =
+                Math.random() * this.context.app.renderer.height -
+                mario.height / 2;
+            this.addChild(mario);
+        }
 
         // Handle update
         this.updater = compose(
             applyVelocity,
             applyBounds(context.app.renderer),
             applyBounceOffWalls({
-                preservation: 0.4,
+                preservation: 0.3,
                 renderer: context.app.renderer,
             }),
             applyGravity,
             applyDrag,
         )(this);
+
         context.app.ticker.add(this.updater);
     }
 }

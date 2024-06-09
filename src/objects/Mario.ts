@@ -3,11 +3,11 @@ import { GameObject } from "../objects/GameObject";
 
 export class Mario extends GameObject {
     static async preload() {
-        await Assets.load("assets/mario.png");
+        await Assets.load("assets/paper-mario.png");
     }
 
     static build() {
-        return new Mario(Texture.from("assets/mario.png"));
+        return new Mario(Texture.from("assets/paper-mario.png"));
     }
 
     private constructor(texture: Texture) {
