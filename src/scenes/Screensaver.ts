@@ -22,11 +22,10 @@ export class Screensaver extends Container {
         for (let i = 0; i < 100; i++) {
             const mario = Mario.build();
             mario.x =
-                Math.random() * this.context.app.renderer.width -
-                mario.width / 2;
+                Math.random() * (this.context.app.renderer.width - mario.width);
             mario.y =
-                Math.random() * this.context.app.renderer.height -
-                mario.height / 2;
+                Math.random() *
+                (this.context.app.renderer.height - mario.height);
             this.addChild(mario);
         }
 
