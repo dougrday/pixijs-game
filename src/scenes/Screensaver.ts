@@ -1,4 +1,4 @@
-import { Container } from "pixi.js";
+import { Container, Ticker } from "pixi.js";
 import { GameContext } from "../objects/GameContext";
 import { Mario } from "../objects/Mario";
 import { applyBounceOffWalls } from "../tickers/applyBounceOffWalls";
