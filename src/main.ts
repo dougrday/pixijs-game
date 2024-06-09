@@ -15,10 +15,13 @@ const main = async () => {
     const app = new Application();
 
     await init(app);
-    await Screensaver.preload();
 
+    // Build a game context
     const context: GameContext = { app, ticker: app.ticker };
 
+    // Preload the first scene
+    await Screensaver.preload();
+    // Add the first scene to the stage
     app.stage.addChild(new Screensaver(context));
 
     document.body.appendChild(app.canvas);
