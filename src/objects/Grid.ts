@@ -35,11 +35,11 @@ export class Grid extends Container {
         let totalFrames = 0;
         let updater: (ticker: Ticker) => void;
         updater = (ticker) => {
-            this.pivot.x++;
-            this.pivot.y += 2;
-            this.scale.x *= 1.001;
-            this.scale.y *= 1.001;
-            if (totalFrames++ > 500) {
+            this.pivot.x += 2;
+            this.pivot.y += 4;
+            this.scale.x *= 1.002;
+            this.scale.y *= 1.002;
+            if (totalFrames++ > 250) {
                 ticker.remove(updater);
             }
         };
