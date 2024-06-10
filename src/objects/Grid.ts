@@ -1,4 +1,4 @@
-import { Assets, Container, Sprite, Texture } from "pixi.js";
+import { Assets, Container, Sprite, Texture, Ticker } from "pixi.js";
 import { GameContext } from "./GameContext";
 import { Tile } from "./Tile";
 import { TerrainType } from "../types/TerrainType";
@@ -30,6 +30,20 @@ export class Grid extends Container {
         }
 
         this.drawIsometricGrid();
+
+        // Make the camera move across the scene
+        let totalFrames = 0;
+        let updater: (ticker: Ticker) => void;
+        updater = (ticker) => {
+            this.pivot.x++;
+            this.pivot.y += 2;
+            this.scale.x *= 1.001;
+            this.scale.y *= 1.001;
+            if (totalFrames++ > 500) {
+                ticker.remove(updater);
+            }
+        };
+        context.ticker.add(updater);
     }
 
     drawIsometricGrid() {
