@@ -6,7 +6,7 @@ import { MarioGame } from "./scenes/MarioGame";
 const init = async (app: Application) => {
     await app.init();
     app.renderer.resize(window.innerWidth, window.innerHeight);
-    app.ticker.maxFPS = 60;
+    app.ticker.maxFPS = 120;
 
     window.addEventListener("resize", () => {
         app.renderer.resize(window.innerWidth, window.innerHeight);

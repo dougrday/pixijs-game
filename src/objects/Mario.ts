@@ -55,13 +55,13 @@ export class Mario extends GameObject {
             this.targetScaleX = -0.05;
             if (this.scale.x === this.targetScaleX) {
                 // Shift key makes you run
-                this.force.x = keyboard.isKeyDown(Key.Shift) ? 70 : 40;
+                this.force.x = keyboard.isKeyDown(Key.Shift) ? 80 : 40;
             }
         } else if (keyboard.isKeyDown(Key.ArrowLeft)) {
             this.targetScaleX = 0.05;
             if (this.scale.x === this.targetScaleX) {
                 // Shift key makes you run
-                this.force.x = keyboard.isKeyDown(Key.Shift) ? -70 : -40;
+                this.force.x = keyboard.isKeyDown(Key.Shift) ? -80 : -40;
             }
         } else this.force.x = 0;
 
