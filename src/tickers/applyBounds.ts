@@ -16,18 +16,24 @@ export const applyBounds =
     (boundary: HasBounds) => (container: Container) => (_: Ticker) => {
         for (const child of container.children) {
             if (child instanceof GameObject) {
+                const anchorLeft =
+                    child.anchor.x !== 0 ? child.width * child.anchor.x : 0;
+                const anchorTop =
+                    child.anchor.y !== 0 ? child.height * child.anchor.y : 0;
+                const x = child.x - anchorLeft;
+                const y = child.y - anchorTop;
                 // Ensure the object stays in bounds
-                if (child.x < 0) {
-                    child.x = 0;
+                if (x < 0) {
+                    child.x = anchorLeft;
                 }
-                if (child.x + child.width > boundary.width) {
-                    child.x = boundary.width - child.width;
+                if (x + child.width > boundary.width) {
+                    child.x = boundary.width - child.width + anchorLeft;
                 }
-                if (child.y < 0) {
-                    child.y = 0;
+                if (y < 0) {
+                    child.y = anchorTop;
                 }
-                if (child.y + child.height > boundary.height) {
-                    child.y = boundary.height - child.height;
+                if (y + child.height > boundary.height) {
+                    child.y = boundary.height - child.height + anchorTop;
                 }
             }
         }
