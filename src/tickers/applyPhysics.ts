@@ -2,7 +2,7 @@ import { Container, Ticker } from "pixi.js";
 import { GameObject } from "../objects/GameObject";
 
 const dragCoefficient = 0.1; // A simple drag coefficient, adjust based on experimentation
-const gravity = 2.5;
+const gravity = 2.3;
 
 /**
  * Applies game object velocity during a tick.
@@ -14,7 +14,7 @@ export const applyPhysics = (container: Container) => (ticker: Ticker) => {
     for (const child of container.children) {
         if (child instanceof GameObject) {
             // Apply gravity (positive y-direction is assumed to be downwards)
-            child.force.y += child.mass * gravity; // Gravity force added to the existing force
+            child.force.y = child.mass * gravity; // Gravity force added to the existing force
 
             // Calculate drag based on current velocity and update forces
             let velocityMagnitude = Math.sqrt(
