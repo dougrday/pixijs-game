@@ -7,6 +7,7 @@ export class Mario extends GameObject {
     isJumping = false;
     jumpTime = 0;
     mass = 50;
+    targetScaleX = 0.05;
 
     static async preload() {
         await Assets.load("assets/paper-mario.png");
@@ -22,6 +23,8 @@ export class Mario extends GameObject {
     ) {
         super(texture);
 
+        this.anchor.x = 0.5;
+        this.anchor.y = 0.5;
         this.scale.x = 0.05;
         this.scale.y = 0.05;
 
@@ -52,10 +55,25 @@ export class Mario extends GameObject {
         if (keyboard.isKeyDown(Key.ArrowRight)) {
             // Shift key makes you run
             this.force.x = keyboard.isKeyDown(Key.Shift) ? 70 : 40;
+            this.targetScaleX = -0.05;
         } else if (keyboard.isKeyDown(Key.ArrowLeft)) {
             // Shift key makes you run
             this.force.x = keyboard.isKeyDown(Key.Shift) ? -70 : -40;
+            this.targetScaleX = 0.05;
         } else this.force.x = 0;
+
+        // Make Mario turn around like paper
+        if (this.scale.x > this.targetScaleX) {
+            this.scale.x = Math.max(
+                this.targetScaleX,
+                this.scale.x - 0.01 * ticker.deltaTime,
+            );
+        } else if (this.scale.x < this.targetScaleX) {
+            this.scale.x = Math.min(
+                this.targetScaleX,
+                this.scale.x + 0.01 * ticker.deltaTime,
+            );
+        }
 
         // Space bar to jump
         if (keyboard.isKeyDown(Key.Space)) {
