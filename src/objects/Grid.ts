@@ -1,10 +1,9 @@
+import { Easing, Tween } from "@tweenjs/tween.js";
 import { Assets, Container, Sprite, Texture } from "pixi.js";
+import { runTween } from "../tween/runTween";
+import { TerrainType } from "../types/TerrainType";
 import { GameContext } from "./GameContext";
 import { Tile } from "./Tile";
-import { TerrainType } from "../types/TerrainType";
-import { Easing, Tween } from "@tweenjs/tween.js";
-import { OutlineFilter } from "@pixi/filter-outline";
-import { zoomTo } from "../zoom/zoomTo";
 
 export class Grid extends Container {
     public tiles: Tile[] = [];
@@ -34,12 +33,31 @@ export class Grid extends Container {
 
         this.drawIsometricGrid();
 
-        zoomTo(
+        // First zoom
+        runTween(
             context.ticker,
-            this,
-            { pivot: { x: 1500, y: 1500 }, scale: { x: 3, y: 3 } },
-            3000,
-            Easing.Quadratic.InOut,
+            new Tween(this)
+                .to(
+                    { pivot: { x: 1500, y: 1500 }, scale: { x: 3, y: 3 } },
+                    3000,
+                )
+                .easing(Easing.Quadratic.InOut)
+                .start(),
+        ).then(() =>
+            // Second zoom
+            runTween(
+                context.ticker,
+                new Tween(this)
+                    .to(
+                        {
+                            pivot: { x: -800, y: 200 },
+                            scale: { x: 0.5, y: 0.5 },
+                        },
+                        3000,
+                    )
+                    .easing(Easing.Quadratic.InOut)
+                    .start(),
+            ),
         );
     }
 
