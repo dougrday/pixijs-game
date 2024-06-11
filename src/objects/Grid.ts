@@ -1,7 +1,10 @@
-import { Assets, Container, Sprite, Texture, Ticker } from "pixi.js";
+import { Assets, Container, Sprite, Texture } from "pixi.js";
 import { GameContext } from "./GameContext";
 import { Tile } from "./Tile";
 import { TerrainType } from "../types/TerrainType";
+import { Easing, Tween } from "@tweenjs/tween.js";
+import { OutlineFilter } from "@pixi/filter-outline";
+import { zoomTo } from "../zoom/zoomTo";
 
 export class Grid extends Container {
     public tiles: Tile[] = [];
@@ -31,19 +34,13 @@ export class Grid extends Container {
 
         this.drawIsometricGrid();
 
-        // Make the camera move across the scene
-        let totalFrames = 0;
-        let updater: (ticker: Ticker) => void;
-        updater = (ticker) => {
-            this.pivot.x += 2;
-            this.pivot.y += 4;
-            this.scale.x *= 1.002;
-            this.scale.y *= 1.002;
-            if (totalFrames++ > 250) {
-                ticker.remove(updater);
-            }
-        };
-        context.ticker.add(updater);
+        zoomTo(
+            context.ticker,
+            this,
+            { pivot: { x: 1500, y: 1500 }, scale: { x: 3, y: 3 } },
+            3000,
+            Easing.Quadratic.InOut,
+        );
     }
 
     drawIsometricGrid() {
