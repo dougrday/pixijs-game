@@ -63,7 +63,7 @@ export class Grid extends Container {
 
     drawIsometricGrid() {
         const tileSize = 128; // Assuming the height of the tile, width will be considered double
-        const tileWidth = tileSize * 2;
+        const tileWidth = tileSize * 1.5;
 
         // Depth sorting
         this.tiles.sort(
