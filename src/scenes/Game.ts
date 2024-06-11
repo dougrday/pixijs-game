@@ -31,7 +31,7 @@ export class Game extends Container {
         runTween(
             context.ticker,
             new Tween(this.grid)
-                .to({ pivot: { x: 600, y: 600 }, scale: { x: 2, y: 2 } }, 1000)
+                .to({ pivot: { x: 600, y: 600 }, scale: { x: 2, y: 2 } }, 5000)
                 .easing(Easing.Quadratic.InOut)
                 .start(),
         );
