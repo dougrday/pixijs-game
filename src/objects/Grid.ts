@@ -1,6 +1,4 @@
-import { Easing, Tween } from "@tweenjs/tween.js";
 import { Assets, Container, Sprite, Texture } from "pixi.js";
-import { runTween } from "../tween/runTween";
 import { TerrainType } from "../types/TerrainType";
 import { GameContext } from "./GameContext";
 import { Tile } from "./Tile";
@@ -10,9 +8,9 @@ export class Grid extends Container {
 
     static async preload() {
         await Assets.load([
-            "assets/grassland.webp",
-            "assets/tile-house-on-grass.webp",
-            "assets/road1.webp",
+            "assets/tiles/basic/grassland.webp",
+            "assets/tiles/basic/tile-house-on-grass.webp",
+            "assets/tiles/basic/road1.webp",
         ]);
     }
 
@@ -24,9 +22,9 @@ export class Grid extends Container {
         super();
 
         const textures = [
-            Texture.from("assets/grassland.webp"),
-            Texture.from("assets/tile-house-on-grass.webp"),
-            Texture.from("assets/road1.webp"),
+            Texture.from("assets/tiles/basic/grassland.webp"),
+            Texture.from("assets/tiles/basic/tile-house-on-grass.webp"),
+            Texture.from("assets/tiles/basic/road1.webp"),
         ];
 
         this.tiles = [];
