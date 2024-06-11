@@ -1,7 +1,7 @@
 import { Application } from "pixi.js";
 import { Keyboard } from "./controllers/keyboard";
 import { GameContext } from "./objects/GameContext";
-import { Grid } from "./objects/Grid";
+import { Game } from "./scenes/Game";
 
 const init = async (app: Application) => {
     await app.init();
@@ -28,9 +28,9 @@ const main = async () => {
     };
 
     // Preload the first scene
-    await Grid.preload();
+    await Game.preload();
     // Add the first scene to the stage
-    app.stage.addChild(new Grid(context, 16, 16));
+    app.stage.addChild(new Game(context, [], 16, 16));
 
     document.body.appendChild(app.canvas);
 };

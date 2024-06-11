@@ -32,33 +32,6 @@ export class Grid extends Container {
         }
 
         this.drawIsometricGrid();
-
-        // First zoom
-        runTween(
-            context.ticker,
-            new Tween(this)
-                .to(
-                    { pivot: { x: 1500, y: 1500 }, scale: { x: 3, y: 3 } },
-                    3000,
-                )
-                .easing(Easing.Quadratic.InOut)
-                .start(),
-        ).then(() =>
-            // Second zoom
-            runTween(
-                context.ticker,
-                new Tween(this)
-                    .to(
-                        {
-                            pivot: { x: -800, y: 200 },
-                            scale: { x: 0.5, y: 0.5 },
-                        },
-                        1000,
-                    )
-                    .easing(Easing.Quadratic.InOut)
-                    .start(),
-            ),
-        );
     }
 
     drawIsometricGrid() {
