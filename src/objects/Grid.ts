@@ -9,7 +9,11 @@ export class Grid extends Container {
     public tiles: Tile[] = [];
 
     static async preload() {
-        await Assets.load("assets/tile-house-on-grass.webp");
+        await Assets.load([
+            "assets/grassland.webp",
+            "assets/tile-house-on-grass.webp",
+            "assets/road1.webp",
+        ]);
     }
 
     constructor(
@@ -19,14 +23,25 @@ export class Grid extends Container {
     ) {
         super();
 
-        const texture = Texture.from("assets/tile-house-on-grass.webp");
+        const textures = [
+            Texture.from("assets/grassland.webp"),
+            Texture.from("assets/tile-house-on-grass.webp"),
+            Texture.from("assets/road1.webp"),
+        ];
 
         this.tiles = [];
         for (let y = 0; y < tilesDown; y++) {
             for (let x = 0; x < tilesAcross; x++) {
-                const elevation = 0; //Math.floor(Math.random() * 4); // Random elevation from 0 to 3
+                const elevation = 0;
+                const tileIndex = Math.floor(Math.random() * 3);
                 this.tiles.push(
-                    new Tile(texture, TerrainType.Plain, x, y, elevation),
+                    new Tile(
+                        textures[tileIndex],
+                        TerrainType.Plain,
+                        x,
+                        y,
+                        elevation,
+                    ),
                 );
             }
         }
