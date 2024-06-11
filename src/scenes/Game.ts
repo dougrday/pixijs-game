@@ -1,9 +1,10 @@
-import { Grid } from "../objects/Grid";
-import { Player } from "../concepts/Player";
-import { Container } from "pixi.js";
-import { GameContext } from "../objects/GameContext";
-import { runTween } from "../tween/runTween";
 import { Easing, Tween } from "@tweenjs/tween.js";
+import { AdvancedBloomFilter, GodrayFilter } from "pixi-filters";
+import { Container } from "pixi.js";
+import { Player } from "../concepts/Player";
+import { GameContext } from "../objects/GameContext";
+import { Grid } from "../objects/Grid";
+import { runTweens } from "../tween/runTweens";
 
 export class Game extends Container {
     public grid: Grid;
@@ -23,34 +24,59 @@ export class Game extends Container {
         super();
 
         this.grid = new Grid(context, gridWidth, gridHeight);
+        this.grid.filters = [
+            new AdvancedBloomFilter({
+                blur: 8,
+                brightness: 1,
+                quality: 4,
+                threshold: 0.5,
+            }),
+            new GodrayFilter({
+                alpha: 1,
+                angle: 160,
+                gain: 0.6,
+                lacunarity: 2.75,
+                time: 0,
+            }),
+        ];
         this.players = players;
 
         this.addChild(this.grid);
 
-        // First zoom
-        runTween(
+        runTweens(
             context.ticker,
             new Tween(this.grid)
-                .to({ pivot: { x: 600, y: 600 }, scale: { x: 2, y: 2 } }, 5000)
-                .easing(Easing.Quadratic.InOut)
+                .to(
+                    {
+                        pivot: {
+                            x: 600,
+                            y: 800,
+                        },
+                        scale: { x: 2, y: 2 },
+                    },
+                    2000,
+                )
+                .easing(Easing.Quintic.Out)
                 .start(),
+        ).then(() =>
+            runTweens(
+                context.ticker,
+                new Tween(this.grid)
+                    .delay(3000)
+                    .to(
+                        {
+                            pivot: {
+                                x: -600,
+                                y: 400,
+                            },
+                            scale: { x: 0.5, y: 0.5 },
+                        },
+                        1000,
+                    )
+                    .easing(Easing.Quintic.Out)
+                    .start(),
+            ),
         );
-        // .then(() =>
-        //     // Second zoom
-        //     runTween(
-        //         context.ticker,
-        //         new Tween(this.grid)
-        //             .to(
-        //                 {
-        //                     pivot: { x: -800, y: 200 },
-        //                     scale: { x: 0.5, y: 0.5 },
-        //                 },
-        //                 1000,
-        //             )
-        //             .easing(Easing.Quadratic.InOut)
-        //             .start(),
-        //     ),
-        // );
     }
 
     getCurrentPlayer(): Player {

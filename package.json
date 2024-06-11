@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@tweenjs/tween.js": "^23.1.2",
+        "pixi-filters": "^6.0.4",
         "pixi.js": "^8.1.6"
     }
 }
