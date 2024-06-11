@@ -53,7 +53,7 @@ export class Grid extends Container {
                             pivot: { x: -800, y: 200 },
                             scale: { x: 0.5, y: 0.5 },
                         },
-                        3000,
+                        1000,
                     )
                     .easing(Easing.Quadratic.InOut)
                     .start(),
