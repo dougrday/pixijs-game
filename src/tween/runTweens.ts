@@ -2,11 +2,11 @@ import { Tween } from "@tweenjs/tween.js";
 import { Ticker } from "pixi.js";
 
 /**
- * Runs a tween using the given ticker, then removes it.
- * @param ticker The ticker to use for smooth zooming.
+ * Adds tweens to the given ticker, then removes it when the tweens have completed.
+ * @param ticker The ticker to add tweens to.
  * @param tweens The tween(s) to run.
  */
-export const runTweens = <T extends Record<string, any>>(
+export const addTweensToTicker = <T extends Record<string, any>>(
     ticker: Ticker,
     ...tweens: Tween<T>[]
 ): Promise<void> => {

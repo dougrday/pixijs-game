@@ -4,7 +4,7 @@ import { Container } from "pixi.js";
 import { Player } from "../concepts/Player";
 import { GameContext } from "../objects/GameContext";
 import { Grid } from "../objects/Grid";
-import { runTweens } from "../tween/runTweens";
+import { addTweensToTicker } from "../tween/runTweens";
 
 export class Game extends Container {
     public grid: Grid;
@@ -43,7 +43,7 @@ export class Game extends Container {
 
         this.addChild(this.grid);
 
-        runTweens(
+        addTweensToTicker(
             context.ticker,
             new Tween(this.grid)
                 .to(
@@ -59,7 +59,7 @@ export class Game extends Container {
                 .easing(Easing.Quintic.Out)
                 .start(),
         ).then(() =>
-            runTweens(
+            addTweensToTicker(
                 context.ticker,
                 new Tween(this.grid)
                     .delay(3000)

@@ -4,13 +4,13 @@ import { Tile } from "./Tile";
 
 export class Unit {
     constructor(
-        public id: number,
-        public name: string,
-        public health: number,
         public attack: number,
         public defense: number,
-        public speed: number,
+        public health: number,
+        public id: number,
+        public name: string,
         public player: Player,
+        public speed: number,
         public statusEffects: StatusEffect[] = [],
     ) {}
 
